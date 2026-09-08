@@ -32,12 +32,10 @@ jobs:
         run: python -m pip install pygbag
 
       - name: Construire le jeu
-        run: python -m pygbag --archive main.py
+        run: python -m pygbag --build main.py
 
-      - name: Extraire le site Web
-        run: |
-          mkdir -p site
-          tar -xzf build/web/*.tar.gz -C site || tar -xzf *.tar.gz -C site
+      - name: Verifier les fichiers
+        run: ls -la build/web
 
       - name: Configurer GitHub Pages
         uses: actions/configure-pages@v5
@@ -45,7 +43,7 @@ jobs:
       - name: Envoyer le site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: build/web
 
       - name: Publier
         id: deployment
